@@ -2,7 +2,8 @@
 Simulation for Bloch-McConnell Equation, as Jiadi Xu and Kexin Wang's answers to the exchange rate challenge.
 
 # Exchange rate challenge
----The idea in brief--
+*The idea in brief*
+\n
 The idea is to simulate the same pool system with the same preparation and compare our results
 You can find the pool and saturation settings here
 https://github.com/pulseq-cest/BMsim_challenge
