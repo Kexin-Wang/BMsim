@@ -127,7 +127,17 @@ for kPulCell = 1:nPulses
             
          %first parameter R2mtc, second is the saturation power in Hz, third one is the
         %offset in Hz
-        evolMat = exchMat + rMat + chemicalShiftMat + pulseMat;
+        if pulse(kPul,1) == 0
+            noRF_chemicalShiftList = cellfun(@(pool) pool{5},  pools); 
+            % wList: chemical shift evolution frequency in radian
+            wList = 2*pi*magneticField*gyro1H*gyro*(noRF_chemicalShiftList+1e6);        
+            noRF_chemicalShiftList = diag([-wList;zeros(nPools,1)],nPools) + ...
+                                        diag([wList;zeros(nPools,1)],-nPools);
+            evolMat = exchMat + rMat + noRF_chemicalShiftList + pulseMat;
+        else
+            evolMat = exchMat + rMat + chemicalShiftMat + pulseMat;
+        end
+
         if exist('mtc_lineshape' , 'var') == 1
                 mtcpulse=sqrt(xList(3)^2+yList(3)^2);
                 mtc_rf=RF_MT(1/r2List(3),mtcpulse,wList(3), mtc_lineshape); 
